@@ -1,0 +1,136 @@
+<app-page-header kicker="Neu" title="Betreuung anlegen" backLink="/betreuungen" />
+
+<main class="page-main">
+  <form class="page-form" novalidate (submit)="$event.preventDefault(); save()">
+    <h6 class="section-label">Katzenbesitzer:in</h6>
+    <app-owner-name-field
+      class="pull-up"
+      [value]="ownerName()"
+      [selectedId]="ownerId()"
+      [owners]="store.owners()"
+      [error]="errors().owner ?? null"
+      [status]="ownerStatus()"
+      (valueChange)="onOwnerName($event)"
+      (picked)="pickOwner($event)"
+      (createRequested)="createOwner()"
+    />
+
+    <div class="contact-grid">
+      <div class="field full">
+        <label for="owner-address">Adresse (optional)</label>
+        <input
+          id="owner-address"
+          class="input"
+          placeholder="Straße, PLZ Ort"
+          autocomplete="street-address"
+          [value]="address()"
+          (input)="address.set(value($event))"
+        />
+      </div>
+      <div class="field">
+        <label for="owner-phone">Telefon (optional)</label>
+        <input
+          id="owner-phone"
+          class="input"
+          type="tel"
+          placeholder="+43 …"
+          autocomplete="tel"
+          [value]="phone()"
+          (input)="phone.set(value($event))"
+        />
+      </div>
+      <div class="field">
+        <label for="owner-email">E-Mail (optional)</label>
+        <input
+          id="owner-email"
+          class="input"
+          type="email"
+          placeholder="name@mail.at"
+          autocomplete="email"
+          [value]="email()"
+          (input)="email.set(value($event))"
+        />
+      </div>
+    </div>
+
+    <div class="rule"></div>
+    <h6 class="section-label">Katzen</h6>
+    <app-cat-chip-input
+      class="pull-up"
+      [cats]="cats()"
+      [owners]="store.owners()"
+      [selectedOwner]="selectedOwner()"
+      [error]="errors().cats ?? null"
+      (added)="addCat($event)"
+      (removed)="removeCat($event)"
+    />
+
+    <div class="rule"></div>
+    <h6 class="section-label">Zeitraum &amp; Preis</h6>
+    <div class="dates pull-up">
+      <div class="field">
+        <label for="date-from">Von *</label>
+        <input
+          id="date-from"
+          class="input input-lg"
+          type="date"
+          [value]="from()"
+          (input)="from.set(value($event))"
+        />
+      </div>
+      <div class="field">
+        <label for="date-to">Bis *</label>
+        <input
+          id="date-to"
+          class="input input-lg"
+          type="date"
+          [min]="from()"
+          [value]="to()"
+          (input)="to.set(value($event))"
+        />
+      </div>
+    </div>
+    @if (errors().dates) {
+      <div class="field-error pull-up-more">{{ errors().dates }}</div>
+    }
+
+    <div class="field price">
+      <label for="price">Preis pro Besuch (€)</label>
+      <input
+        id="price"
+        class="input input-lg"
+        type="number"
+        min="0"
+        step="0.5"
+        inputmode="decimal"
+        [value]="price()"
+        (input)="price.set(value($event))"
+      />
+      @if (errors().price) {
+        <div class="field-error">{{ errors().price }}</div>
+      }
+    </div>
+
+    <div class="summary">
+      <div class="summary-cell">
+        <div class="mini-label">Tage</div>
+        <div class="summary-value">{{ summary().days }}</div>
+      </div>
+      <div class="summary-cell">
+        <div class="mini-label">Besuche</div>
+        <div class="summary-value">{{ summary().visits }}</div>
+      </div>
+      <div class="summary-cell">
+        <div class="mini-label">Max.</div>
+        <div class="summary-value">{{ summary().max }}</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary save" [disabled]="saving()">
+        Betreuung speichern
+      </button>
+      <a class="btn btn-secondary cancel" routerLink="/betreuungen">Abbrechen</a>
+    </div>
+  </form>
+</main>

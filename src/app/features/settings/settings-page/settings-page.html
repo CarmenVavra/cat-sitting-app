@@ -1,0 +1,91 @@
+<app-page-header kicker="Verwaltung" title="Einstellungen" />
+
+<main class="page-main">
+  <div class="page-form">
+    <h6 class="section-label">Standardpreis</h6>
+    <div class="price-row pull-up">
+      <div class="field price-field">
+        <label for="default-price">Pro Besuch (€)</label>
+        <input
+          id="default-price"
+          class="input input-lg"
+          type="number"
+          min="0"
+          step="0.5"
+          inputmode="decimal"
+          [value]="store.settings().defaultPrice"
+          (input)="onDefaultPrice($event)"
+          (blur)="onDefaultPriceBlur($event)"
+        />
+      </div>
+      <div class="hint">Vorschlag für neue Betreuungen. Bestehende behalten ihren Preis.</div>
+    </div>
+
+    <div class="rule"></div>
+    <h6 class="section-label">Betreuungspersonen</h6>
+    <div class="list-top pull-up">
+      @for (r of sitterRows(); track r.id) {
+        <div class="sitter-row">
+          <span class="swatch" [style.background]="r.color"></span>
+          <span class="sitter-name">{{ r.name }}</span>
+          <span class="hint">{{ r.visits }} Besuche</span>
+          <button
+            type="button"
+            class="btn btn-ghost remove"
+            [disabled]="r.locked"
+            [attr.title]="
+              r.locked ? 'Hat erfasste Besuche – bleibt für die Abrechnung erhalten.' : null
+            "
+            (click)="removeSitter(r.id)"
+          >
+            Entfernen
+          </button>
+        </div>
+      } @empty {
+        <div class="sitter-row hint">Noch keine Betreuungspersonen.</div>
+      }
+    </div>
+    <form class="sitter-form" novalidate (submit)="$event.preventDefault(); addSitter()">
+      <div class="field">
+        <label for="sitter-first">Vorname *</label>
+        <input
+          id="sitter-first"
+          class="input input-lg"
+          autocomplete="off"
+          [value]="first()"
+          (input)="first.set(value($event)); sitterError.set('')"
+        />
+      </div>
+      <div class="field">
+        <label for="sitter-last">Nachname</label>
+        <input
+          id="sitter-last"
+          class="input input-lg"
+          autocomplete="off"
+          [value]="last()"
+          (input)="last.set(value($event))"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary add">Hinzufügen</button>
+    </form>
+    @if (sitterError()) {
+      <div class="field-error pull-up-more">{{ sitterError() }}</div>
+    }
+
+    <div class="rule"></div>
+    <h6 class="section-label">Gespeicherte Besitzer:innen</h6>
+    <div class="list-top pull-up">
+      @for (o of ownerRows(); track o.id) {
+        <div class="owner-row">
+          <div class="owner-head">
+            <span class="owner-name">{{ o.name }}</span
+            ><span class="owner-cats">{{ o.cats }}</span>
+          </div>
+          <div class="hint">{{ o.contact }}</div>
+        </div>
+      } @empty {
+        <div class="owner-row hint">Noch keine Besitzer:innen gespeichert.</div>
+      }
+    </div>
+  </div>
+</main>

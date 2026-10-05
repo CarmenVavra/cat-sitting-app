@@ -1,0 +1,80 @@
+<app-page-header kicker="Katzenbetreuung" title="Betreuungen" [showNew]="true" />
+
+<main class="page-main">
+  <div class="page-stack">
+    @if (!store.ready()) {
+      <p class="muted">Lade …</p>
+    } @else {
+      @if (active().length === 0 && ended().length === 0) {
+        <div class="empty-state">Keine laufenden Betreuungen. Lege mit „Neu“ eine an.</div>
+      }
+
+      @if (active().length > 0) {
+        <h6 class="section-label">Laufend &amp; geplant</h6>
+        <div class="card-grid">
+          @for (c of active(); track c.id) {
+            <article class="card booking-card">
+              <div class="card-top">
+                <span
+                  class="tag"
+                  [class.tag-accent]="c.status === 'running'"
+                  [class.tag-outline]="c.status !== 'running'"
+                  >{{ c.statusLabel }}</span
+                >
+                <span class="range">{{ c.range }}</span>
+              </div>
+              <div>
+                <a class="card-title cats stretched" [routerLink]="['/betreuungen', c.id]">{{
+                  c.cats
+                }}</a>
+                <div class="owner">{{ c.owner }}</div>
+              </div>
+              <div
+                class="progress"
+                role="progressbar"
+                aria-label="Erfasste Besuche"
+                [attr.aria-valuenow]="c.pct"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div class="progress-fill" [style.width.%]="c.pct"></div>
+              </div>
+              <div class="card-bottom">
+                <span>{{ c.done }} / {{ c.total }} Besuche</span><b>{{ c.amount }}</b>
+              </div>
+            </article>
+          }
+        </div>
+      }
+
+      @if (ended().length > 0) {
+        <div class="rule"></div>
+        <h6 class="section-label">Beendet · bereit fürs Archiv</h6>
+        <div class="card-grid">
+          @for (c of ended(); track c.id) {
+            <article class="card booking-card ended">
+              <div class="card-top">
+                <span class="tag tag-neutral">Beendet</span>
+                <span class="range">{{ c.range }}</span>
+              </div>
+              <div>
+                <a class="card-title cats stretched" [routerLink]="['/betreuungen', c.id]">{{
+                  c.cats
+                }}</a>
+                <div class="owner">{{ c.owner }}</div>
+              </div>
+              <div class="card-bottom center">
+                <span
+                  >{{ c.done }} Besuche · <b>{{ c.amount }}</b></span
+                >
+                <button type="button" class="btn btn-secondary archive-btn" (click)="archive(c.id)">
+                  <app-icon name="archive" [size]="15" />Ins Archiv
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    }
+  </div>
+</main>

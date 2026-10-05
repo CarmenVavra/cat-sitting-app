@@ -1,0 +1,8 @@
+parameters:
+    level: 9
+    paths:
+        - api/src
+        - api/public
+        - api/bin
+        - api/tests
+    tmpDir: api/var/phpstan

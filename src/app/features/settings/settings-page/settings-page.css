@@ -1,0 +1,64 @@
+.pull-up {
+  margin-top: -8px;
+}
+.pull-up-more {
+  margin-top: -10px;
+}
+.hint {
+  font-size: 12px;
+  color: var(--color-neutral-700);
+}
+
+.price-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+.price-row .hint {
+  padding-bottom: 4px;
+}
+.price-field {
+  width: 140px;
+  flex: none;
+}
+
+.sitter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+.sitter-name {
+  flex: 1;
+  font-weight: 600;
+}
+.remove {
+  font-size: 13px;
+}
+
+.sitter-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.add {
+  min-height: 44px;
+}
+
+.owner-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+.owner-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.owner-name {
+  font-weight: 600;
+}
+.owner-cats {
+  font-size: 13px;
+}

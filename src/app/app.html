@@ -1,0 +1,62 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-title">Katzen&shy;betreuung</div>
+    </div>
+    <nav class="side-nav" aria-label="Hauptnavigation">
+      @for (item of nav(); track item.path) {
+        <a class="side-link" [routerLink]="item.path" routerLinkActive="active">
+          <app-icon [name]="item.icon" [size]="18" />
+          <span class="side-label">{{ item.label }}</span>
+          @if (item.count !== null) {
+            <span class="side-count">{{ item.count }}</span>
+          }
+        </a>
+      }
+    </nav>
+    <div class="sidebar-foot">Heute · {{ todayLabel() }}</div>
+  </aside>
+
+  <div class="content">
+    <router-outlet />
+
+    @if (store.state() === 'error' && !store.error()) {
+      <div class="toast" role="alert">
+        <span>Daten konnten nicht geladen werden.</span>
+        <button type="button" class="btn btn-secondary" (click)="store.load()">Erneut laden</button>
+      </div>
+    }
+    @if (store.error(); as message) {
+      <div class="toast" role="alert">
+        <span>{{ message }}</span>
+        @if (store.state() === 'error') {
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="store.dismissError(); store.load()"
+          >
+            Erneut laden
+          </button>
+        }
+        <button
+          type="button"
+          class="btn btn-ghost btn-icon"
+          aria-label="Meldung schließen"
+          (click)="store.dismissError()"
+        >
+          <app-icon name="x" [size]="16" />
+        </button>
+      </div>
+    }
+
+    <nav class="tabbar" aria-label="Hauptnavigation">
+      @for (item of nav(); track item.path) {
+        <a class="tab" [routerLink]="item.path" routerLinkActive="active">
+          <app-icon [name]="item.icon" [size]="20" />
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+  </div>
+</div>
