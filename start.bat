@@ -2,7 +2,7 @@
 setlocal
 rem Startet die Katzenbetreuung-App:
 rem   PHP-API      -> http://localhost:8400  (Fenster "Katzenbetreuung API")
-rem   Angular-App  -> http://localhost:4200  (Fenster "Katzenbetreuung App", leitet /api an 8400 weiter)
+rem   Angular-App  -> http://localhost:4250  (Fenster "Katzenbetreuung App", leitet /api an 8400 weiter)
 rem Beenden mit stop.bat
 
 cd /d "%~dp0"
@@ -26,16 +26,16 @@ if errorlevel 1 (
     echo Port 8400 ist bereits belegt - laeuft die API schon? Ggf. zuerst stop.bat ausfuehren.
 )
 
-call :portInUse 4200
+call :portInUse 4250
 if errorlevel 1 (
-    start "Katzenbetreuung App" /min cmd /c "npx ng serve --port 4200 --open"
+    start "Katzenbetreuung App" /min cmd /c "npx ng serve --port 4250 --open"
 ) else (
-    echo Port 4200 ist bereits belegt - laeuft die App schon? Ggf. zuerst stop.bat ausfuehren.
+    echo Port 4250 ist bereits belegt - laeuft die App schon? Ggf. zuerst stop.bat ausfuehren.
 )
 
 echo.
 echo API:  http://localhost:8400/api/bookings
-echo App:  http://localhost:4200  (oeffnet sich automatisch, sobald sie bereit ist)
+echo App:  http://localhost:4250  (oeffnet sich automatisch, sobald sie bereit ist)
 echo Beenden mit stop.bat
 endlocal
 exit /b 0

@@ -8,7 +8,7 @@ Design-Vorlage: [`UI_MOCKUPS/design_handoff_katzenbetreuung`](UI_MOCKUPS/design_
 
 | Datei       | Wirkung                                                                                                          |
 | ----------- | ---------------------------------------------------------------------------------------------------------------- |
-| `start.bat` | startet die PHP-API auf **http://localhost:8400** und die App auf **http://localhost:4200** (öffnet den Browser) |
+| `start.bat` | startet die PHP-API auf **http://localhost:8400** und die App auf **http://localhost:4250** (öffnet den Browser) |
 | `stop.bat`  | beendet beide Server                                                                                             |
 
 Beim ersten Start werden fehlende Abhängigkeiten (`composer install`, `npm install`) automatisch installiert.

@@ -1,10 +1,10 @@
 @echo off
 setlocal
-rem Beendet die mit start.bat gestarteten Server (Ports 8400 und 4200).
+rem Beendet die mit start.bat gestarteten Server (Ports 8400 und 4250).
 rem Andere PHP-/Node-Prozesse bleiben unberuehrt.
 
 call :stopPort 8400 "PHP-API"
-call :stopPort 4200 "Angular-App"
+call :stopPort 4250 "Angular-App"
 
 rem Uebrig gebliebene Fenster von start.bat schliessen
 taskkill /FI "WINDOWTITLE eq Katzenbetreuung API*" /T /F >nul 2>&1
